@@ -104,16 +104,44 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-  $('<div class="open-code">▼展开代码</div><div class="close-code">▲收起代码</div>')
-    .insertBefore('.toggle-code figure.highlight table');
-  $('.toggle-code figure').find('.open-code').click(function () {
-    $(this).hide();
-    $(this).parents('.toggle-code').find('.close-code').show();
-    $(this).parents('.toggle-code').find('table').slideToggle();
-  })
-  $('.toggle-code figure').find('.close-code').click(function () {
-    $(this).hide();
-    $(this).parents('.toggle-code').find('.open-code').show();
-    $(this).parents('.toggle-code').find('table').slideToggle();
-  })
+  var hasVelocity = $.isFunction($('html').velocity);
+  var ANIMATE_DURATION = 200;
+  if(hasVelocity) {
+    var toggleCodeClassName = 'toggle-code';
+    var toggleCodeClass = '.' + toggleCodeClassName;
+    var openCodeClassName = 'open-code';
+    var openCodeClass = '.' + openCodeClassName;
+    var closeCodeClassName = 'close-code';
+    var closeCodeClass = '.' + closeCodeClassName;
+
+    var $toggleCodeFigure = $(toggleCodeClass + ' figure');
+    $('<div class="' + openCodeClassName + '">▼展开代码</div><div class="' + closeCodeClassName + '">▲收起代码</div>')
+      .insertBefore(toggleCodeClass + ' figure.highlight table');
+
+    // click open-code 
+    $toggleCodeFigure.find(openCodeClass)
+      .on('click', function () {
+        var $thisToggleCode = $(this).parents(toggleCodeClass);
+        $(this).hide();
+        $thisToggleCode
+          .find(closeCodeClass)
+          .show();
+        $thisToggleCode
+          .find('table')
+          .velocity("fadeIn", { duration: ANIMATE_DURATION });
+      })
+
+    // click close-code 
+    $toggleCodeFigure.find(closeCodeClass)
+      .on('click', function () {
+        var $thisToggleCode = $(this).parents(toggleCodeClass);
+        $(this).hide();
+        $thisToggleCode
+          .find(openCodeClass)
+          .show();
+        $thisToggleCode
+          .find('table')
+          .velocity("fadeOut", { duration: ANIMATE_DURATION });
+      })
+  }
 })
