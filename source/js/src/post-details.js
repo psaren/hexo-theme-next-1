@@ -104,16 +104,6 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-  $('<div class="open-code">▼展开代码</div><div class="close-code">▲收起代码</div>')
-    .insertBefore('.toggle-code figure.highlight table');
-  $('.toggle-code figure').find('.open-code').click(function () {
-    $(this).hide();
-    $(this).parents('.toggle-code').find('.close-code').show();
-    $(this).parents('.toggle-code').find('table').slideToggle();
-  })
-  $('.toggle-code figure').find('.close-code').click(function () {
-    $(this).hide();
-    $(this).parents('.toggle-code').find('.open-code').show();
-    $(this).parents('.toggle-code').find('table').slideToggle();
-  })
+  if(typeof toggleCode === 'function')
+    toggleCode()
 })
