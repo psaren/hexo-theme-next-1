@@ -7,6 +7,10 @@
   </span>
   <span class="author" itemprop="copyrightHolder">{{ theme.footer.copyright | default(author) }}</span>
 
+  {% if theme.icp %}
+    <div>{{ theme.icp }}</div>
+  {% endif %}
+
   {% if config.symbols_count_time.total_symbols %}
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
